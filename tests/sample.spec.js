@@ -4,23 +4,21 @@
 
 var webdriver = require('selenium-webdriver');
 var chrome = require('selenium-webdriver/chrome');
+var conf = require('../browserstack.conf.js');
 
 // set chromedriver path
 var path = 'node_modules/chromedriver/bin/chromedriver';
 chrome.setDefaultService(new chrome.ServiceBuilder(path).build());
 
 // Input capabilities
-var capabilities = {
-  // Auth info
-  'browserstack.user': 'PLEASE_ENTER_BROWSERSTACK_USER',
-  'browserstack.key': 'PLEASE_ENTER_BROWSERSTACK_KEY',
+var capabilities = Object.assign(conf, {
   // Browser settings
   'browserName': 'chrome',
   'browser_version': '60.0', // If browser_version capability is not set, the test will run on the latest version of the browser set by browser capability.
   'os': 'OS X',
   'os_version': 'Sierra',
   'resolution': '1024x768'
-}
+});
 var chromeOptions = new chrome.Options();
 // set content setting value
 //  https://stackoverflow.com/questions/38003756/deactivate-browser-notifications-in-chrome-driver-for-selenium
@@ -30,7 +28,7 @@ chromeOptions.setUserPreferences({
 });
 
 var driver = new webdriver.Builder()
-  // .usingServer('http://hub-cloud.browserstack.com/wd/hub') // with browserstack remote test!
+  .usingServer('http://hub-cloud.browserstack.com/wd/hub') // for browserstack remote test!
   .forBrowser('chrome')
   .setChromeOptions(chromeOptions)
   .withCapabilities(capabilities)
