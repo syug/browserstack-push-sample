@@ -1,0 +1,15 @@
+{
+  "name": "browserstack-push-sample",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Shugo Saito",
+  "license": "ISC",
+  "devDependencies": {
+    "chromedriver": "^2.31.0",
+    "selenium-webdriver": "^3.5.0"
+  }
+}

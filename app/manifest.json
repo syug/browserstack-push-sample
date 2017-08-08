@@ -1,0 +1,11 @@
+{
+  "name": "browserstack-push-sample",
+  "short_name": "sample",
+  "icons": [{
+    "src": "",
+    "sizes": "512x512"
+  }],
+  "start_url": "/",
+  "display": "standalone",
+  "gcm_sender_id": ""
+}

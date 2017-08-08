@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset=utf-8 />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notification API Sapmle</title>
+  <!-- Material Design Theming -->
+  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+  <!-- <link rel="stylesheet" href="main.css"> -->
+  <!-- <link rel="manifest" href="/manifest.json"> -->
+</head>
+
+<body>
+  <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <main class="mdl-layout__content mdl-color--grey-100">
+      <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
+        <!-- Container for the Table of content -->
+        <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+          <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+            <!-- div to display the generated Instance ID token -->
+            <div id="permission_div">
+              <h4>Permission Status is <button id="status" type="button" class="mdl-button mdl-button--raised">Show Dialog</button></h4>
+              <br/>
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="notifyMe()">Request Permission</button>
+            </div>
+            <!-- div to display messages received by this app. -->
+            <div id="messages"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script>
+    function notifyMe() {
+      // ブラウザが通知をサポートしているか確認する
+      if (!("Notification" in window)) {
+        alert("このブラウザはシステム通知をサポートしていません");
+      }
+
+      // すでに通知の許可を得ているか確認する
+      else if (Notification.permission === "granted") {
+        // 許可を得ている場合は、通知を作成する
+        console.log(document.URL + " : already granted");
+        var notification = new Notification("Hi there!");
+      }
+
+      // 許可を得ていない場合は、ユーザに許可を求めなければならない
+      else if (Notification.permission !== 'denied') {
+        console.log(document.URL + " : not denied");
+        Notification.requestPermission(function (permission) {
+          // ユーザが許可した場合は、通知を作成する
+          if (permission === "granted") {
+            console.log(document.URL + " : granted");
+            var notification = new Notification("Hi there!");
+          }
+        });
+      } else {
+        console.log(document.URL + " : maybe denied");
+      }
+    }
+
+    window.onload = function () {
+      document.getElementById('status').innerHTML = Notification.permission;
+      if (Notification.permission != 'granted') {
+        document.getElementById('status').className = 'mdl-button';
+      }
+      document.querySelector('#status').addEventListener('click', function () {
+        window.open(document.URL + "sample.html", "_blank",
+          "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+      });
+
+    };
+  </script>
+</body>
+
+</html>
