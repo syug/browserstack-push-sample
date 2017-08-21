@@ -28,7 +28,7 @@ chromeOptions.setUserPreferences({
 });
 
 var driver = new webdriver.Builder()
-  .usingServer('http://hub-cloud.browserstack.com/wd/hub') // for browserstack remote test!
+  // .usingServer('http://hub-cloud.browserstack.com/wd/hub') // for browserstack remote test!
   .forBrowser('chrome')
   .setChromeOptions(chromeOptions)
   .withCapabilities(capabilities)
