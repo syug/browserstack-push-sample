@@ -17,20 +17,35 @@ var capabilities = Object.assign(conf, {
   'browser_version': '60.0', // If browser_version capability is not set, the test will run on the latest version of the browser set by browser capability.
   'os': 'OS X',
   'os_version': 'Sierra',
-  'resolution': '1024x768'
+  'resolution': '1024x768',
+  'chromeOptions': { // chromeOptions can be set here
+    'prefs': {
+      'profile': {
+        'default_content_setting_values': {
+          'notifications': 1
+        }
+      }
+    },
+    'args': []
+  }
 });
+
 var chromeOptions = new chrome.Options();
 // set content setting value
 //  https://stackoverflow.com/questions/38003756/deactivate-browser-notifications-in-chrome-driver-for-selenium
 //  chrome://settings/content?search=notification
 chromeOptions.setUserPreferences({
-  'profile.default_content_setting_values.notifications': 1
+  'profile': {
+    'default_content_setting_values': {
+      'notifications': 1
+    }
+  }
 });
 
 var driver = new webdriver.Builder()
   // .usingServer('http://hub-cloud.browserstack.com/wd/hub') // for browserstack remote test!
   .forBrowser('chrome')
-  .setChromeOptions(chromeOptions)
+  // .setChromeOptions(chromeOptions)  // chromeOptions can also be set here
   .withCapabilities(capabilities)
   .build();
 
